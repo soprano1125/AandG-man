@@ -1,7 +1,7 @@
 #/bin/sh
 
 
-HOME_PATH=/home/ubuntu/AandG
+HOME_PATH=/home/ubuntu/AandG-man
 PROG_PATH=$HOME_PATH
 COMMON_PATH=$PROG_PATH/common
 
@@ -9,7 +9,7 @@ COMMON_PATH=$PROG_PATH/common
 cd $PROG_PATH
 
 AUTHOR="JOQR"
-STATION_NAME="Cho_A&G_plus"
+STATION_NAME="超A&G+"
 
 #
 # rtmpdump

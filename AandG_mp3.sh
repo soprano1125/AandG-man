@@ -14,7 +14,7 @@ else
 	exit 1
 fi
 
-HOME_PATH=/home/ubuntu/AandG
+HOME_PATH=/home/ubuntu/AandG-man
 PROG_PATH=$HOME_PATH
 TEMP_PATH=$HOME_PATH/share/temp
 COMMON_PATH=$PROG_PATH/common
@@ -24,7 +24,7 @@ cd $PROG_PATH
 
 OUT_DIR=$HOME_PATH/share/AandG
 OUT_FILE=$OUT_DIR/$FILENAME.mp3
-#FILE_OWNER=`$COMMON_PATH/getParam common owner`
+FILE_OWNER=`$COMMON_PATH/getParam common owner`
 
 mkdir -p $OUT_DIR $TEMP_PATH $PROG_PATH/log/
 $PROG_PATH/AandG_download.sh $time $TEMP_PATH/$FILENAME.flv

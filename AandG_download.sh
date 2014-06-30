@@ -10,7 +10,7 @@ else
 	exit 1
 fi
 
-HOME_PATH=/home/ubuntu/AandG
+HOME_PATH=/home/ubuntu/AandG-man
 PROG_PATH=$HOME_PATH
 TEMP_PATH=$HOME_PATH/share/temp
 COMMON_PATH=$PROG_PATH/common
@@ -52,9 +52,6 @@ for SERVER_PARAM in ${SERVER_PARAMS[@]}; do
 	echo $MESSAGE 1>&2
 	#$HOME_PATH/twitter/post.sh "$MESSAGE" > /dev/null
 	rtmpdump -v -r "$SERVER" --playpath "$PLAYPATH" --app "$APPLICATION" $time_param --timeout 1 --live --flv $DUMP_FILE 2> $DISP_MODE
-#echo	rtmpdump -v -r "$SERVER" --playpath "$PLAYPATH" --app "$APPLICATION" $time_param --timeout 1 --live --flv $DUMP_FILE 2> $DISP_MODE
-#echo 	sleep $time
-#	sleep $time
 	RTMPDUMP_STATUS=$?
 
 	if [ "$isLive" = "live" ];
