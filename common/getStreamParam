@@ -1,0 +1,43 @@
+#!/usr/bin/perl --
+
+use strict;
+use Config::Simple;
+use File::Spec;
+use LWP::UserAgent;
+use XML::Simple;
+
+use Data::Dumper;
+
+my ($ua, $res, $cfg, $data);
+
+#my $home_path = File::Spec->rel2abs();
+#$home_path =~ s/__FILE__//g;
+
+#$cfg = new Config::Simple($home_path . '/radiko.ini')->vars();
+#my $rtmp_pattern = $cfg->{'common.rtmp_pattern'};
+#my $timeout = $cfg->{'common.http_timeout'};
+#my $user_agent = $cfg->{'common.mozilla_agent'} .' (' . $cfg->{'common.user_agent'} . ') radiko.jp/' . $cfg->{'common.player_ver'};
+
+$ua = LWP::UserAgent->new;
+#$ua->timeout($timeout);
+#$ua->agent($user_agent);
+
+$res = $ua->get('http://www.uniqueradio.jp/agplayerf/getfmsList.xml');
+if (!$res->is_success) {
+	print "Station is not Found.\n";
+	exit 1;
+}
+
+my ($protocol, $app, $stream, $rtmp_server, $app_url);
+my $stream_params = XML::Simple->new()->XMLin($res->content)->{"serverlist"}->{"serverinfo"};
+foreach my $stream_param (@{$stream_params}){
+	($rtmp_server, $app_url) = split(/\?/, $stream_param->{"server"});
+	if(!($rtmp_server =~ /uniqueradio.jp/)){ next; }
+	$protocol = $stream_param->{"protocol"};
+	$app = $stream_param->{"app"};
+	$stream = $stream_param->{"stream"};
+	print sprintf("%s://%s,?%s/%s/,%s\n", $protocol, $rtmp_server, $app_url, $app, $stream);
+}
+
+exit 0;
+
