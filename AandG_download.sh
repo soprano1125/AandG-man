@@ -18,9 +18,6 @@ COMMON_PATH=$PROG_PATH/common
 . $COMMON_PATH/base.sh
 cd $PROG_PATH
 
-#PROG_MODE=`$COMMON_PATH/getParam common prog_mode`
-MODULE_PATH=$PROG_PATH/$PROG_MODE
-
 FILE_NAME=`echo $DUMP_FILE | sed -e "s|$TEMP_PATH\/||g"`
 
 isLive=`echo FILE_NAME | perl -ne 'print $1 if(/^(\w+)-(\d+)/i)'`
@@ -32,7 +29,7 @@ if [ "$time" = "live" ]; then
 else
 	now_date=`date "+%s"`
 	end_date=$((now_date + time))
-	DUMP_FILE="$TEMP_PATH/$FILE_NAME-$now_date"
+	DUMP_FILE=`echo $DUMP_FILE | sed -e "s|.flv|-$now_date.flv|g"`
 	time_param="-B $time"
 	isLive="rec"
 fi
@@ -50,8 +47,8 @@ for SERVER_PARAM in ${SERVER_PARAMS[@]}; do
 	##########################################################
 	MESSAGE="$FILE_NAME: $isLive do"
 	echo $MESSAGE 1>&2
-	#$HOME_PATH/twitter/post.sh "$MESSAGE" > /dev/null
-	rtmpdump -v -r "$SERVER" --playpath "$PLAYPATH" --app "$APPLICATION" $time_param --timeout 1 --live --flv $DUMP_FILE 2> $DISP_MODE
+#	$HOME_PATH/twitter/post.sh "$MESSAGE" > /dev/null
+	rtmpdump -v -r "$SERVER" --playpath "$PLAYPATH" --app "$APPLICATION" $time_param --timeout 3600 --live --flv $DUMP_FILE 2> $DISP_MODE
 	RTMPDUMP_STATUS=$?
 
 	if [ "$isLive" = "live" ];
@@ -64,7 +61,7 @@ for SERVER_PARAM in ${SERVER_PARAMS[@]}; do
 		if [ ! -s $DUMP_FILE ]; then
 			rm -rf $DUMP_FILE; 
 		fi
-		DUMP_FILE="$TEMP_PATH/$FILE_NAME-$now_date"
+		DUMP_FILE="$TEMP_PATH/$FILE_NAME-$now_date.flv"
 	fi
 
 	if [ $RTMPDUMP_STATUS -ne 0 ];
@@ -74,7 +71,7 @@ for SERVER_PARAM in ${SERVER_PARAMS[@]}; do
 		MESSAGE="$FILE_NAME: $isLive done"
 	fi
 
-	#$HOME_PATH/twitter/post.sh "$MESSAGE" > /dev/null
+#	$HOME_PATH/twitter/post.sh "$MESSAGE" > /dev/null
 	echo $MESSAGE 1>&2
 	if [ $RTMPDUMP_STATUS -eq 0 ];
 	then

@@ -14,7 +14,7 @@ STATION_NAME="超A&G+"
 #
 # rtmpdump
 #
-$PROG_PATH/AandG_download.sh live live-$REC_DATE | vlc --meta-title " " --meta-author $AUTHOR --meta-artist $STATION_NAME --meta-date $REC_DATE --play-and-exit --no-one-instance --no-sout-display-video - 2> /dev/null 
+$PROG_PATH/AandG_download.sh live live-$REC_DATE | vlc --meta-title " " --meta-author $AUTHOR --meta-artist $STATION_NAME --meta-date $REC_DATE --play-and-exit --no-one-instance --no-sout-display-video - 2> /dev/null
 
 exit 0
 

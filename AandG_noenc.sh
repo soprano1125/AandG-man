@@ -32,7 +32,9 @@ if [ $? -ne 0 ]; then
 	exit 1;
 fi
 
-sudo mv $TEMP_PATH/$FILENAME.flv $OUT_FILE
+for file in `ls -1 $TEMP_PATH/$FILENAME*`;do
+	sudo mv $file $OUT_FILE
+done
 sudo chown -R $FILE_OWNER $OUT_DIR
 
 exit 0
