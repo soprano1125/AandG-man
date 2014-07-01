@@ -77,5 +77,10 @@ for SERVER_PARAM in ${SERVER_PARAMS[@]}; do
 	then
 		exit $RTMPDUMP_STATUS
 	fi
+
+	if [ "$isLive" = "live" ];
+	then
+		exit $RTMPDUMP_STATUS
+	fi
 done
 
