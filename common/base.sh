@@ -6,8 +6,8 @@ if [ "$REC_DATE" == "" ]; then
 fi
 FILENAME=$output"_"$REC_DATE
 
-USER_AGENT="`$COMMON_PATH/getParam common mozilla_agent` (`$COMMON_PATH/getParam common user_agent`) A&G/0.1"
-HTTP_TIMEOUT=`$COMMON_PATH/getParam common http_timeout`
+USER_AGENT="`$COMMON_PATH/makeUserAgent "Cho-A&G+" \`$COMMON_PATH/getParam common version\``"
+HTTP_TIMEOUT="`$COMMON_PATH/getParam common http_timeout`"
 
 TTY=`tty`
 if [ "$TTY" == "not a tty" ]; then
