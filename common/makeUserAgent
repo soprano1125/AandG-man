@@ -21,7 +21,7 @@ $home_path =~ s/__FILE__//g;
 
 $cfg = new Config::Simple("$home_path/AandG.ini")->vars();
 my $user_agent = sprintf("%s (%s) %s/%s\n", $cfg->{'common.mozilla_agent'}, $cfg->{'common.user_agent'}, $stream_site, $player_version);
-print STDERR $user_agent;
+#print STDERR $user_agent;
 print $user_agent;
 
 exit 0;
