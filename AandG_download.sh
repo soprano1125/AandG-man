@@ -26,12 +26,14 @@ if [ "$time" = "live" ]; then
 	DUMP_FILE="-"
 	time_param=""
 	isLive="live"
+	time_out="2"
 else
 	now_date=`date "+%s"`
 	end_date=$((now_date + time))
 	DUMP_FILE=`echo $DUMP_FILE | sed -e "s|.flv|-$now_date.flv|g"`
 	time_param="-B $time"
 	isLive="rec"
+	time_out="3600"
 fi
 
 SERVER_PARAMS=(`common/getStreamParam | tr '\n' ' '`)
@@ -48,7 +50,8 @@ for SERVER_PARAM in ${SERVER_PARAMS[@]}; do
 	MESSAGE="$FILE_NAME: $isLive do"
 	echo $MESSAGE 1>&2
 #	$HOME_PATH/twitter/post.sh "$MESSAGE" > /dev/null
-	rtmpdump -v -r "$SERVER" --playpath "$PLAYPATH" --app "$APPLICATION" $time_param --timeout 3600 --live --flv $DUMP_FILE 2> $DISP_MODE
+#echo	rtmpdump -v -r "$SERVER" --playpath "$PLAYPATH" --app "$APPLICATION" $time_param --timeout $time_out --live --flv $DUMP_FILE 1>&2
+	rtmpdump -v -r "$SERVER" --playpath "$PLAYPATH" --app "$APPLICATION" $time_param --timeout $time_out --live --flv $DUMP_FILE 2> $DISP_MODE
 	RTMPDUMP_STATUS=$?
 
 	if [ "$isLive" = "live" ];
@@ -78,7 +81,7 @@ for SERVER_PARAM in ${SERVER_PARAMS[@]}; do
 		exit $RTMPDUMP_STATUS
 	fi
 
-	if [ "$isLive" = "live" ];
+	if [ $RTMPDUMP_STATUS -eq 0 -a "$isLive" = "live" ];
 	then
 		exit $RTMPDUMP_STATUS
 	fi

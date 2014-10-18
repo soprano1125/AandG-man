@@ -17,25 +17,33 @@ my $rtmp_pattern = $cfg->{'common.rtmp_pattern'};
 my $timeout = $cfg->{'common.http_timeout'};
 my $user_agent = `$prog_path/common/makeUserAgent "Cho-A&G+" $cfg->{'common.version'}`;
 
-$ua = LWP::UserAgent->new;
-$ua->timeout($timeout);
-$ua->agent($user_agent);
+#$ua = LWP::UserAgent->new;
+#$ua->timeout($timeout);
+#$ua->agent($user_agent);
 
-$res = $ua->get('http://www.uniqueradio.jp/agplayerf/getfmsList.xml');
-if (!$res->is_success) {
-	print "Station is not Found.\n";
-	exit 1;
-}
+#$res = $ua->get('http://www.uniqueradio.jp/agplayerf/getfmsList.xml');
+#if (!$res->is_success) {
+#	print "Station is not Found.\n";
+#	exit 1;
+#}
 
 my ($protocol, $app, $stream, $rtmp_server, $app_url);
-my $stream_params = XML::Simple->new()->XMLin($res->content)->{"serverlist"}->{"serverinfo"};
-foreach my $stream_param (@{$stream_params}){
-	($rtmp_server, $app_url) = split(/\?/, $stream_param->{"server"});
-	if(!($rtmp_server =~ /uniqueradio.jp/)){ next; }
-	$protocol = $stream_param->{"protocol"};
-	$app = $stream_param->{"app"};
-	$stream = $stream_param->{"stream"};
-	print sprintf("%s://%s,?%s/%s/,%s\n", $protocol, $rtmp_server, $app_url, $app, $stream);
+#my $stream_params = XML::Simple->new()->XMLin($res->content)->{"serverlist"}->{"serverinfo"};
+#foreach my $stream_param (@{$stream_params}){
+#	($rtmp_server, $app_url) = split(/\?/, $stream_param->{"server"});
+#	if(!($rtmp_server =~ /uniqueradio.jp/)){ next; }
+#	$protocol = $stream_param->{"protocol"};
+#	$app = $stream_param->{"app"};
+#	$stream = $stream_param->{"stream"};
+#	print sprintf("%s://%s,?%s/%s/,%s\n", $protocol, $rtmp_server, $app_url, $app, $stream);
+#}
+
+foreach my $count_uniqueradio (1 ... 5){
+	foreach my $count_mitene (1 ... 5){
+		foreach my $count_stream (1 ... 5){
+			printf("%s://%s,?%s/%s/,%s\n", "rtmpe", "fms$count_uniqueradio.uniqueradio.jp", "rtmp://fms-base$count_mitene.mitene.ad.jp", "agqr", "aandg$count_stream");
+		}
+	}
 }
 
 exit 0;
