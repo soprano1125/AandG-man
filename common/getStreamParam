@@ -27,7 +27,7 @@ my $user_agent = `$prog_path/common/makeUserAgent "Cho-A&G+" $cfg->{'common.vers
 #	exit 1;
 #}
 
-my ($protocol, $app, $stream, $rtmp_server, $app_url);
+#my ($protocol, $app, $stream, $rtmp_server, $app_url);
 #my $stream_params = XML::Simple->new()->XMLin($res->content)->{"serverlist"}->{"serverinfo"};
 #foreach my $stream_param (@{$stream_params}){
 #	($rtmp_server, $app_url) = split(/\?/, $stream_param->{"server"});
@@ -40,7 +40,7 @@ my ($protocol, $app, $stream, $rtmp_server, $app_url);
 
 foreach my $count_uniqueradio (1 ... 5){
 	foreach my $count_mitene (1 ... 5){
-		foreach my $count_stream (1 ... 5){
+		foreach my $count_stream (1 ... 11){
 			printf("%s://%s,?%s/%s/,%s\n", "rtmpe", "fms$count_uniqueradio.uniqueradio.jp", "rtmp://fms-base$count_mitene.mitene.ad.jp", "agqr", "aandg$count_stream");
 		}
 	}
